@@ -77,6 +77,6 @@ CREATE TABLE agar_dish (id INT, x FLOAT, y FLOAT);
 CREATE TABLE agar_dish_training (id INT, x FLOAT, y FLOAT);
 CREATE TABLE agar_dish_testing (id INT, x FLOAT, y FLOAT);
 COPY agar_dish FROM LOCAL 'agar_dish.csv' DELIMITER ',' ENCLOSED BY '"' SKIP 1;
-COPY agar_dis_training FROM LOCAL 'agar_dish_training.csv' DELIMITER ',' ENCLOSED BY '"' SKIP 1;
+COPY agar_dish_training FROM LOCAL 'agar_dish_training.csv' DELIMITER ',' ENCLOSED BY '"' SKIP 1;
 COPY agar_dish_testing FROM LOCAL 'agar_dish_testing.csv' DELIMITER ',' ENCLOSED BY '"' SKIP 1;
 
