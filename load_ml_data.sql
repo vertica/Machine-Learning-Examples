@@ -47,7 +47,7 @@ DROP TABLE IF EXISTS faithful_training;
 CREATE TABLE faithful (id int, eruptions float, waiting int);
 COPY faithful FROM LOCAL 'faithful.csv' DELIMITER ',' ENCLOSED BY '"' SKIP 1;
 CREATE TABLE faithful_testing (id int, eruptions float, waiting int);
-COPY faithful_test FROM LOCAL 'faithful_testing.csv' DELIMITER ',' ENCLOSED BY '"' SKIP 1;
+COPY faithful_testing FROM LOCAL 'faithful_testing.csv' DELIMITER ',' ENCLOSED BY '"' SKIP 1;
 CREATE TABLE faithful_training (id int, eruptions float, waiting int);
 COPY faithful_training FROM LOCAL 'faithful_training.csv' DELIMITER ',' ENCLOSED BY '"' SKIP 1;
 
