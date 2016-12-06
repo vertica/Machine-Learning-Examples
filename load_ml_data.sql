@@ -80,3 +80,20 @@ COPY agar_dish FROM LOCAL 'agar_dish.csv' DELIMITER ',' ENCLOSED BY '"' SKIP 1;
 COPY agar_dish_training FROM LOCAL 'agar_dish_training.csv' DELIMITER ',' ENCLOSED BY '"' SKIP 1;
 COPY agar_dish_testing FROM LOCAL 'agar_dish_testing.csv' DELIMITER ',' ENCLOSED BY '"' SKIP 1;
 
+-- house84 data set
+DROP TABLE IF EXISTS house84 CASCADE;
+DROP TABLE IF EXISTS dem_votes CASCADE;
+DROP TABLE IF EXISTS rep_votes CASCADE;
+DROP TABLE IF EXISTS house84_clean CASCADE;
+CREATE TABLE house84 (id IDENTITY, party varchar(10), vote1 varchar(1), vote2 varchar(1),
+                      vote3 varchar(1), vote4 varchar(1), vote5 varchar(1), vote6 varchar(1),
+                      vote7 varchar(1), vote8 varchar(1), vote9 varchar(1), vote10 varchar(10),
+                      vote11 varchar(1), vote12 varchar(1), vote13 varchar(1), vote14 varchar(1),
+                      vote15 varchar(1), vote16 varchar(1));
+COPY house84 FROM LOCAL 'house-votes-84.csv' DELIMITER ',' ENCLOSED BY '"';
+CREATE TABLE house84_clean AS SELECT * FROM house84;
+CREATE TABLE dem_votes (vote varchar(8), yes INT, no INT);
+CREATE TABLE rep_votes (vote varchar(8), yes INT, no INT);
+DROP TABLE IF EXISTS house84_test CASCADE;
+DROP TABLE IF EXISTS house84_train CASCADE;
+\i naive_bayes.sql
