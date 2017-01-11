@@ -71,14 +71,14 @@ COPY salary_data FROM LOCAL 'salary_data.csv' DELIMITER ',' ENCLOSED BY '"' SKIP
 
 -- agar dish data set
 DROP TABLE IF EXISTS agar_dish;
-DROP TABLE IF EXISTS agar_dish_training;
-DROP TABLE IF EXISTS agar_dish_testing;
+DROP TABLE IF EXISTS agar_dish_1;
+DROP TABLE IF EXISTS agar_dish_2;
 CREATE TABLE agar_dish (id INT, x FLOAT, y FLOAT);
-CREATE TABLE agar_dish_training (id INT, x FLOAT, y FLOAT);
-CREATE TABLE agar_dish_testing (id INT, x FLOAT, y FLOAT);
+CREATE TABLE agar_dish_1 (id INT, x FLOAT, y FLOAT);
+CREATE TABLE agar_dish_2 (id INT, x FLOAT, y FLOAT);
 COPY agar_dish FROM LOCAL 'agar_dish.csv' DELIMITER ',' ENCLOSED BY '"' SKIP 1;
-COPY agar_dish_training FROM LOCAL 'agar_dish_training.csv' DELIMITER ',' ENCLOSED BY '"' SKIP 1;
-COPY agar_dish_testing FROM LOCAL 'agar_dish_testing.csv' DELIMITER ',' ENCLOSED BY '"' SKIP 1;
+COPY agar_dish_1 FROM LOCAL 'agar_dish_training.csv' DELIMITER ',' ENCLOSED BY '"' SKIP 1;
+COPY agar_dish_2 FROM LOCAL 'agar_dish_testing.csv' DELIMITER ',' ENCLOSED BY '"' SKIP 1;
 
 -- house84 data set
 DROP TABLE IF EXISTS house84 CASCADE;
