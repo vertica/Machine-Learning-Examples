@@ -96,4 +96,4 @@ CREATE TABLE dem_votes (vote varchar(8), yes INT, no INT);
 CREATE TABLE rep_votes (vote varchar(8), yes INT, no INT);
 DROP TABLE IF EXISTS house84_test CASCADE;
 DROP TABLE IF EXISTS house84_train CASCADE;
-\i naive_bayes.sql
+
