@@ -97,3 +97,25 @@ CREATE TABLE rep_votes (vote varchar(8), yes INT, no INT);
 DROP TABLE IF EXISTS house84_test CASCADE;
 DROP TABLE IF EXISTS house84_train CASCADE;
 
+-- data set for missing value imputation
+CREATE TABLE small_input_impute(pid int, pclass int, gender int,  x1 float, x2 float, x3 float, x4 INT, x5 char, x6 varchar);
+INSERT INTO small_input_impute VALUES( 1, 0, 0, -9.445818, -9.740541, -9.786974, 3, 't', 'A');
+INSERT INTO small_input_impute VALUES( 2, 0, 0, -9.618292, -9.308881, -9.562255, 4, 't', 'A');
+INSERT INTO small_input_impute VALUES( 3, 0, 0, -9.060605, -9.390844, -9.559848, 6, 't', 'B');
+INSERT INTO small_input_impute VALUES( 4, 0, 0, -2.264599, -2.615146, -2.107290, 15, 't', 'B');
+INSERT INTO small_input_impute VALUES( 5, 0, 1, -2.590837, -2.892819, -2.702960, 2, 't', 'C');
+INSERT INTO small_input_impute VALUES( 6, 0, 1, -2.264599, -2.615146, -2.107290, 11, 't', 'C');
+INSERT INTO small_input_impute VALUES( 7, 1, 1, 3.829239,  3.087650,  'INFINITY', NULL, 'f', 'C');
+INSERT INTO small_input_impute VALUES( 8, 1, 1, 3.273592,  NULL,  3.477332, 18, 'f', 'B');
+INSERT INTO small_input_impute VALUES( 9, 1, 1, NULL,      3.841606,  3.754375, 20, 'f', 'B');
+INSERT INTO small_input_impute VALUES( 10,1, 1,   NULL,      3.841606,  3.754375, 20, 't', 'A');
+INSERT INTO small_input_impute VALUES( 11, 0, 0, -9.445818, -9.740541, -9.786974, 3, 't','B');
+INSERT INTO small_input_impute VALUES( 12, 0, 0, -9.618292, -9.308881, -9.562255, 4, 't', 'C');
+INSERT INTO small_input_impute VALUES( 13, 0, 0, -9.060605, -9.390844, -9.559848, 6, 't', 'C');
+INSERT INTO small_input_impute VALUES( 14, 0, 0, -2.264599, -2.615146, -2.107290, 15, 'f','A');
+INSERT INTO small_input_impute VALUES( 15, 0, 1, -2.590837, -2.892819, -2.702960, 2, 'f','A');
+INSERT INTO small_input_impute VALUES( 16, 0, 1, -2.264599, -2.615146, -2.107290, 11, 'f', 'A');
+INSERT INTO small_input_impute VALUES( 17, 1, 1, 3.829239,  3.087650,  'INFINITY', NULL, 'f', 'B');
+INSERT INTO small_input_impute VALUES( 18, 1, 1, 3.273592,  NULL,  3.477332, 18, 't', 'B');
+INSERT INTO small_input_impute VALUES( 19, 1, 1, NULL,      3.841606,  3.754375, 20, 't', NULL);
+INSERT INTO small_input_impute VALUES( 20,1, 1,   NULL,      3.841606,  3.754375, 20, NULL, 'C');
