@@ -31,11 +31,11 @@ DROP TABLE IF EXISTS iris;
 DROP TABLE IF EXISTS iris1;
 DROP TABLE IF EXISTS iris2;
 CREATE TABLE iris (id int, Sepal_Length float, Sepal_Width float,
-                   Petal_Length float, Petal_Wdith float, Species varchar(10));
+                   Petal_Length float, Petal_Width float, Species varchar(10));
 CREATE TABLE iris1 (id int, Sepal_Length float, Sepal_Width float,
-                    Petal_Length float, Petal_Wdith float, Species varchar(10));
+                    Petal_Length float, Petal_Width float, Species varchar(10));
 CREATE TABLE iris2 (id int, Sepal_Length float, Sepal_Width float,
-                    Petal_Length float, Petal_Wdith float, Species varchar(10));
+                    Petal_Length float, Petal_Width float, Species varchar(10));
 COPY iris FROM LOCAL 'iris.csv' DELIMITER ',' ENCLOSED BY '"' SKIP 1;
 COPY iris1 FROM LOCAL 'iris1.csv' DELIMITER ',' ENCLOSED BY '"' SKIP 1;
 COPY iris2 FROM LOCAL 'iris2.csv' DELIMITER ',' ENCLOSED BY '"' SKIP 1;
