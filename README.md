@@ -19,7 +19,9 @@ For complete examples of each of the Machine Learning function, see the followin
 * [Linear Regression]
 * [Logistic Regression]
 * [Naive Bayes]
-* [SVM]
+* [Random Forest]
+* [SVM Classification]
+* [SVM Regression]
 
 ## Reference Documentation
 [Vertica machine learning reference documentation]
@@ -31,5 +33,7 @@ For complete examples of each of the Machine Learning function, see the followin
 [Linear Regression]: https://my.vertica.com/docs/latest/HTML/index.htm#Authoring/AnalyzingData/MachineLearning/LinearRegression/LinearRegression.htm
 [Logistic Regression]: https://my.vertica.com/docs/latest/HTML/index.htm#Authoring/AnalyzingData/MachineLearning/LogisticRegression/LogisticRegression.htm
 [Naive Bayes]: https://my.vertica.com/docs/latest/HTML/index.htm#Authoring/AnalyzingData/MachineLearning/NaiveBayes/NaiveBayes.htm
-[SVM]: https://my.vertica.com/docs/latest/HTML/index.htm#Authoring/AnalyzingData/MachineLearning/SVM/SVM.htm
+[Random Forest]: https://my.vertica.com/docs/latest/HTML/index.htm#Authoring/AnalyzingData/MachineLearning/RandomForest/RandomForest.htm
+[SVM Classification]: https://my.vertica.com/docs/latest/HTML/index.htm#Authoring/AnalyzingData/MachineLearning/SVM/SVM.htm
+[SVM Regression]: https://my.vertica.com/docs/latest/HTML/index.htm#Authoring/AnalyzingData/MachineLearning/SVM/SVM__SupportVectorMachine_forRegression.htm
 [Vertica machine learning reference documentation]: https://my.vertica.com/docs/latest/HTML/#Authoring/SQLReferenceManual/Functions/MachineLearning/MLAlgorithms.htm
