@@ -1,4 +1,4 @@
--Random Forest Functions 
+--Random Forest Functions 
 
 --RF_CLASSIFIER: 
 
@@ -14,5 +14,5 @@ SELECT PREDICT_RF_CLASSIFIER (Sepal_Length, Sepal_Width, Petal_Length, Petal_Wid
 SELECT PREDICT_RF_CLASSIFIER_CLASSES(Sepal_Length, Sepal_Width, Petal_Length, Petal_Width
                                USING PARAMETERS model_name='myRFModel') OVER () FROM iris;
 
-SELECT PREDICT_RF_CLASSIFIER_CLASSES(Sepal_Length, Sepal_Width, Petal_Length, Petal_Wdith
+SELECT PREDICT_RF_CLASSIFIER_CLASSES(Sepal_Length, Sepal_Width, Petal_Length, Petal_Width
                           USING PARAMETERS model_name='myRFModel', match_by_pos='true') OVER () FROM iris;
