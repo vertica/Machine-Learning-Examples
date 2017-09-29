@@ -1,6 +1,5 @@
 /*****************************
- * HPE Vertica
- * Copyright (c) 2005 - 2016 Vertica, an HPE company
+ * Copyright (c) 2017 EntIT Software LLC
  *****************************/
 
 /**
@@ -9,7 +8,7 @@
  * This file contains a series of SQL commands to load the Machine Learning
  * example data sets.
  *
- * You need to first install HPE Vertica before running
+ * You need to first install MicroFocus Vertica before running
  * the commands in this file.
  *
 */
@@ -119,3 +118,15 @@ INSERT INTO small_input_impute VALUES( 17, 1, 1, 3.829239,  3.087650,  'INFINITY
 INSERT INTO small_input_impute VALUES( 18, 1, 1, 3.273592,  NULL,  3.477332, 18, 't', 'B');
 INSERT INTO small_input_impute VALUES( 19, 1, 1, NULL,      3.841606,  3.754375, 20, 't', NULL);
 INSERT INTO small_input_impute VALUES( 20,1, 1,   NULL,      3.841606,  3.754375, 20, NULL, 'C');
+
+-- titanic data set
+DROP TABLE IF EXISTS titanic_training;
+DROP TABLE IF EXISTS titanic_testing;
+CREATE TABLE titanic_training(passenger_id int, survived int, pclass int, name varchar(50), 
+                           sex varchar(10), age int, sibling_and_spouse_count int, parent_and_child_count int,
+                           ticket varchar(15), fare float, cabin varchar(10), embarkation_point varchar(15));
+COPY titanic_training FROM LOCAL 'titanic_training.csv' DELIMITER ',' ENCLOSED BY '"';
+CREATE TABLE titanic_testing(passenger_id int, pclass int, name varchar(50), 
+                           sex varchar(10), age int, sibling_and_spouse_count int, parent_and_child_count int,
+                           ticket varchar(15), fare float, cabin varchar(10), embarkation_point varchar(15));
+COPY titanic_testing FROM LOCAL 'titanic_testing.csv' DELIMITER ',' ENCLOSED BY '"';
