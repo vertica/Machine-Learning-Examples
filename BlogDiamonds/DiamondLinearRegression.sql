@@ -1,3 +1,7 @@
+/*
+The script is created using DbVisulizer. It should work in any other SQL editors, just to make sure the comments notation is the same.
+*/
+
 -- 11 columns
 DROP TABLE if exists diamond;
 CREATE TABLE diamond(id int, carat float, cut varchar(10), color varchar(1), clarity varchar(10), 
@@ -333,3 +337,73 @@ select RSQUARED(price, PredPrice) OVER() FROM pred_linear_logprice_logcarat;
 
 select CORR(price, PredPrice) FROM pred_linear_logprice_logcarat;
 --0.978363784710021
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------
+--Linear Regression with L1, log(price), and log(carat)
+---------------------------------------------------------------------------------------------------------------------------------
+drop model if exists diamond_linear_logprice_logcarat_l1;
+SELECT linear_reg('diamond_linear_logprice_logcarat_l1', 'diamond_train', 'logprice', 'logcarat,
+cut_1, cut_2, cut_3, cut_4,
+color_1, color_2, color_3, color_4, color_5, color_6,
+clarity_1, clarity_2, clarity_3, clarity_4, clarity_5, clarity_6, clarity_7,
+depthh, tablee, x, y, z'
+using parameters regularization='L1', lambda=0.0001);
+
+--model stats
+SELECT GET_MODEL_ATTRIBUTE(using parameters model_name='diamond_linear_logprice_logcarat_l1');
+SELECT GET_MODEL_ATTRIBUTE(using parameters model_name='diamond_linear_logprice_logcarat_l1', attr_name='accepted_row_count'); 
+SELECT GET_MODEL_ATTRIBUTE(using parameters model_name='diamond_linear_logprice_logcarat_l1', attr_name='rejected_row_count');
+SELECT GET_MODEL_ATTRIBUTE(using parameters model_name='diamond_linear_logprice_logcarat_l1', attr_name='details');
+/*
+predictor       coefficient     std_err                 t_value                 p_value      
+Intercept	3.20627674968964	0.0326813079912564	98.1073569805545	0.0
+logcarat	1.70452470343898	0.00925461851925636	184.18097946364	0.0
+cut_1	0.0248513150420479	0.00205883749134525	12.0705568781001	1.74212147815449E-33
+cut_2	0.0592222967540651	0.00205046710871861	28.8823441752619	1.89577957977459E-181
+cut_3	0.0484922568383891	0.00197680447379432	24.5306288412591	7.54587989935812E-132
+cut_4	0.0401247539990596	0.00197811498950696	20.2843384797668	5.41700752032948E-91
+color_1	-0.017707509891794	0.00111045222072011	-15.9462150296848	4.65344544441911E-57
+color_2	-0.0349070892313992	0.00111900256543415	-31.1948250251383	6.07301651834865E-211
+color_3	-0.0632368553426645	0.0010990823568507	-57.5360480936688	0.0
+color_4	-0.103785305271019	0.00116926383107931	-88.761238064824	0.0
+color_5	-0.155322802983699	0.00131028410903126	-118.541316278753	0.0
+color_6	-0.214330507057191	0.00162285775298721	-132.069805047713	0.0
+clarity_1	0.421662292163101	0.00313299559778671	134.58757888488	0.0
+clarity_2	0.204189110634472	0.00265684685257892	76.8539257113265	0.0
+clarity_3	0.132251608735387	0.0026708674392372	49.516350677875	0.0
+clarity_4	0.29794907055152	0.00271643494035256	109.68386031467	0.0
+clarity_5	0.268132615401986	0.00267280812426945	100.318692152761	0.0
+clarity_6	0.383835119626048	0.00288330725954413	133.123210630953	0.0
+clarity_7	0.354806957625394	0.00279767633487096	126.822017687675	0.0
+depthh	3.13541234127817E-4	3.40598184829402E-4	0.920560496483159	0.357285822781854
+tablee	-1.59890128873257E-4	1.81571489828582E-4	-0.880590499225436	0.378545114126731
+x	0.0372628030262343	0.00298247934997002	12.4939014335871	9.48843756834416E-36
+y	0.0	0.00104395525173303	0.0	1.0
+z	0.00310402253601275	0.00380551501289256	0.815664246625423	0.414697344388341
+*/
+
+--save results to a table
+drop table if exists pred_linear_logprice_logcarat_l1;
+CREATE TABLE pred_linear_logprice_logcarat_l1 AS 
+(select *, POWER(10, Prediction) AS PredPrice from 
+(SELECT id, logprice, PREDICT_LINEAR_REG (logcarat, cut_1, cut_2, cut_3, cut_4, color_1, color_2, color_3, color_4, color_5, color_6,
+                                       clarity_1, clarity_2, clarity_3, clarity_4, clarity_5, clarity_6, clarity_7,
+                                       depthh, tablee, x, y, z
+                   USING PARAMETERS model_name = 'diamond_linear_logprice_logcarat_l1') AS Prediction, price, logcarat FROM diamond_test) pred_table);
+
+select * from pred_linear_logprice_logcarat_l1;
+
+select summarize_numcol(PredPrice) over() from pred_linear_logprice_logcarat_l1;
+--Column  Count   Mean                    StdDev                  Min     25%     Median  75%     Max      
+--PredPrice	16202	3892.10966081033	3994.13309821425	237.093256586936	954.695912864247	2427.54034576284	5230.55329224424	34189.2871311887
+
+select MSE(price, PredPrice) OVER() FROM pred_linear_logprice_logcarat_l1;
+--755491.495832627	
+
+select RSQUARED(price, PredPrice) OVER() FROM pred_linear_logprice_logcarat_l1;
+--0.952673575370631	
+
+select CORR(price, PredPrice) FROM pred_linear_logprice_logcarat_l1;
+--0.976360325136843
