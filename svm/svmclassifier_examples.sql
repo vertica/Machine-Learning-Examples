@@ -8,3 +8,6 @@ SELECT SVM_CLASSIFIER('mySvmClassModel', 'mtcars', 'am', 'mpg,cyl,disp,hp,drat,w
 --PREDICT_SVM_CLASSIFIER: 
 
 SELECT PREDICT_SVM_CLASSIFIER (mpg,cyl,disp,wt,qsec,vs,gear,carb USING PARAMETERS model_name='mySvmClassModel') FROM mtcars;
+
+SELECT PREDICT_SVM_CLASSIFIER (40,cyl,disp,wt,qsec,vs,gear,carb USING PARAMETERS model_name='mySvmClassModel', match_by_pos ='true') 
+FROM mtcars;
