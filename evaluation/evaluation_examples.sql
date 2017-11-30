@@ -73,4 +73,6 @@ SELECT RSQUARED(obs, prediction) OVER()
                   PREDICT_LINEAR_REG (waiting
                                        USING PARAMETERS model_name='myLinearRegModel') AS prediction
            FROM faithful_testing) AS prediction_output;
-
+	   
+--SUMMARIZE_NUMCOL
+SELECT SUMMARIZE_NUMCOL(years_worked, current_salary) OVER() FROM salary_data;
