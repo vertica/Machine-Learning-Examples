@@ -30,7 +30,7 @@ SELECT GET_MODEL_ATTRIBUTE (USING PARAMETERS model_name='myLinearRegModel', attr
 
 SELECT ERROR_RATE(obs, pred::int USING PARAMETERS num_classes=2) OVER() 
 	FROM (SELECT am AS obs, PREDICT_LOGISTIC_REG (mpg, cyl, disp, hp, drat, wt, qsec, vs, gear, carb
-                USING PARAMETERS model_name='logisticRegModel', owner='dbadmin', type='response') AS pred
+                USING PARAMETERS model_name='logisticRegModel', type='response') AS pred
              FROM mtcars) AS prediction_output;
 	     
 --GET_MODEL_SUMMARY:
