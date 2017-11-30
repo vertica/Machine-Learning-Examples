@@ -75,6 +75,3 @@ SELECT RSQUARED(obs, prediction) OVER()
                                        USING PARAMETERS model_name='linear_reg_faithful') AS prediction
            FROM faithful_testing) AS prediction_output;
 
---SUMMARIZE_MODEL: 
-
-SELECT SUMMARIZE_MODEL('linear_reg_faithful');
