@@ -48,7 +48,7 @@ SELECT LIFT_TABLE(obs, prob USING PARAMETERS num_bins=2) OVER()
 
 SELECT MSE(obs, prediction) OVER()
    FROM (SELECT eruptions AS obs,
-                PREDICT_LINEAR_REG (waiting USING PARAMETERS model_name='linearRegModel') AS prediction
+                PREDICT_LINEAR_REG (waiting USING PARAMETERS model_name='myLinearRegModel') AS prediction
          FROM faithful_testing) AS prediction_output;
 	 
 --ONE_HOT_ENCODER_FIT:
@@ -62,8 +62,7 @@ SELECT ROC(obs, prob USING PARAMETERS num_bins=2) OVER()
 	FROM (SELECT am AS obs,
                     PREDICT_LOGISTIC_REG (mpg, cyl, disp, hp, drat, wt,
                                           qsec, vs, gear, carb
-                                          USING PARAMETERS model_name='logisticRegModel',
-                                                           owner='dbadmin',
+                                          USING PARAMETERS model_name='myLogisticRegModel',
                                                            type='probability') AS prob
              FROM mtcars) AS prediction_output;
 
@@ -72,6 +71,6 @@ SELECT ROC(obs, prob USING PARAMETERS num_bins=2) OVER()
 SELECT RSQUARED(obs, prediction) OVER()
      FROM (SELECT eruptions AS obs,
                   PREDICT_LINEAR_REG (waiting
-                                       USING PARAMETERS model_name='linear_reg_faithful') AS prediction
+                                       USING PARAMETERS model_name='myLinearRegModel') AS prediction
            FROM faithful_testing) AS prediction_output;
 
