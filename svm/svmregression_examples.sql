@@ -7,3 +7,5 @@ SELECT SVM_REGRESSOR('mySvmRegModel', 'faithful', 'eruptions', 'waiting' USING P
 --PREDICT_SVM_REGRESSOR: 
 
 SELECT PREDICT_SVM_REGRESSOR(waiting USING PARAMETERS model_name='mySvmRegModel') FROM faithful ORDER BY id;
+
+SELECT PREDICT_SVM_REGRESSOR(40 USING PARAMETERS model_name='mySvmRegModel', match_by_pos = 'true') FROM faithful ORDER BY id;
