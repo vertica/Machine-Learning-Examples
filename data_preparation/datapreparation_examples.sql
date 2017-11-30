@@ -43,8 +43,8 @@ Popup|35|.378
 
 SELECT * FROM baseball_roster;
 
-SELECT DETECT_OUTLIERS('baseball_outliers', 'baseball_roster', '*', 'robust_zscore' USING PARAMETERS
-outlier_threshold=3.0, exclude_columns='id');
+SELECT DETECT_OUTLIERS('baseball_outliers', 'baseball_roster', 'id, hr, avg', 'robust_zscore' USING PARAMETERS
+outlier_threshold=3.0);
 
 SELECT * FROM baseball_outliers;
 
