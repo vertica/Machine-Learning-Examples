@@ -7,9 +7,9 @@ drop_first='true', ignore_null='false') FROM mtcars;
 
 --CONFUSION_MATRIX: 
 
-SELECT CONFUSION_MATRIX(obs, pred USING PARAMETERS num_classes=2) OVER()
-	FROM (SELECT am AS obs, PREDICT_LOGISTIC_REG(mpg, cyl, disp, hp, drat, wt, qsec, vs, gear, carb
-             USING PARAMETERS model_name='mtcars_log', owner='dbadmin')::INT AS pred
+SELECT CONFUSION_MATRIX(obs::int, pred::int USING PARAMETERS num_classes=2) OVER()
+	FROM (SELECT am AS obs, PREDICT_LOGISTIC_REG(mpg, cyl, disp,drat, wt, qsec, vs, gear, carb
+             USING PARAMETERS model_name='myLogisticRegModel')AS PRED
              FROM mtcars) AS prediction_output;
 	     
 --CROSS_VALIDATE: 
