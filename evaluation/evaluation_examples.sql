@@ -39,10 +39,11 @@ SELECT GET_MODEL_SUMMARY(USING PARAMETERS model_name='linear_reg_faithful');
 
 --LIFT_TABLE: 
 
-SELECT LIFT_TABLE(obs, prob USING PARAMETERS num_bins=2) OVER() 
-	FROM (SELECT am AS obs, PREDICT_LOGISTIC_REG(mpg, cyl, disp, hp, drat, wt, qsec, vs, gear, carb
-                                                    USING PARAMETERS model_name='logisticRegModel',
-                                                    owner='dbadmin', type='probability') AS prob FROM mtcars) AS prediction_output;
+SELECT LIFT_TABLE(obs::int, prob::float USING PARAMETERS num_bins=2) OVER() 
+	FROM (SELECT am AS obs, PREDICT_LOGISTIC_REG(mpg, cyl, disp, drat, wt, qsec, vs, gear, carb
+                                                    USING PARAMETERS model_name='myLogisticRegModel',
+                                                    type='probability') AS prob
+             FROM mtcars) AS prediction_output;
 
 --MSE: 
 
