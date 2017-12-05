@@ -58,13 +58,14 @@ USING PARAMETERS exclude_columns='mpg,disp,drat,wt,qsec,vs,am');
 
 --ROC: 
 
-SELECT ROC(obs, prob USING PARAMETERS num_bins=2) OVER() 
+SELECT ROC(obs::int, prob::float USING PARAMETERS num_bins=2) OVER() 
 	FROM (SELECT am AS obs,
-                    PREDICT_LOGISTIC_REG (mpg, cyl, disp, hp, drat, wt,
+                    PREDICT_LOGISTIC_REG (mpg, cyl, disp, drat, wt,
                                           qsec, vs, gear, carb
                                           USING PARAMETERS model_name='myLogisticRegModel',
                                                            type='probability') AS prob
              FROM mtcars) AS prediction_output;
+
 
 --RSQUARED: 
 
