@@ -76,5 +76,8 @@ SELECT RSQUARED(obs, prediction) OVER()
                                        USING PARAMETERS model_name='myLinearRegModel') AS prediction
            FROM faithful_testing) AS prediction_output;
 	   
+--SUMMARIZE_CATCOL
+SELECT SUMMARIZE_CATCOL (current_salary USING PARAMETERS TOPK = 5) OVER() FROM salary_data;
+	   
 --SUMMARIZE_NUMCOL
 SELECT SUMMARIZE_NUMCOL(years_worked, current_salary) OVER() FROM salary_data;
