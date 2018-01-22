@@ -24,7 +24,7 @@ model_name='cv_svm');
 
 SELECT GET_MODEL_ATTRIBUTE (USING PARAMETERS model_name='myLinearRegModel');
 
-SELECT GET_MODEL_ATTRIBUTE (USING PARAMETERS model_name='myLinearRegModel', attr_name='data');
+SELECT GET_MODEL_ATTRIBUTE (USING PARAMETERS model_name='myLinearRegModel', attr_name='details');
 
 --ERROR_RATE: 
 
