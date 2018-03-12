@@ -139,3 +139,14 @@ CREATE TABLE titanic_testing(passenger_id int, pclass int, name varchar(50),
                            sex varchar(10), age int, sibling_and_spouse_count int, parent_and_child_count int,
                            ticket varchar(15), fare float, cabin varchar(10), embarkation_point varchar(15));
 COPY titanic_testing FROM LOCAL 'titanic_testing.csv' DELIMITER ',' ENCLOSED BY '"';
+
+--data set for SVD
+CREATE TABLE small_svd (id int, x1 int, x2 int, x3 int, x4 int);
+INSERT INTO small_svd VALUES (1,7,3,8,2);
+INSERT INTO small_svd VALUES (2,1,1,4,1);
+INSERT INTO small_svd VALUES (3,2,3,2,0);
+INSERT INTO small_svd VALUES (4,6,2,7,4);
+INSERT INTO small_svd VALUES (5,7,3,8,2);
+INSERT INTO small_svd VALUES (6,1,1,4,1);
+INSERT INTO small_svd VALUES (7,2,3,2,0);
+INSERT INTO small_svd VALUES (8,6,2,7,4);
