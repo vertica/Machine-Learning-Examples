@@ -2,7 +2,7 @@
 Use the data in this repository to complete the Machine Learning examples
 in the [Vertica documentation].
 
-## Loading the data
+## Loading  data
 To load the Machine Learning example data, run the following command
 in 'data' directory of the cloned repository:
 
