@@ -17,6 +17,9 @@
 DROP TABLE IF EXISTS mtcars;
 DROP TABLE IF EXISTS mtcars_train;
 DROP TABLE IF EXISTS mtcars_test;
+DROP MODEL IF EXISTS myRFRegressorModel;
+DROP MODEL IF EXISTS logistic_reg_mtcars;
+DROP MODEL IF EXISTS svm_class;
 CREATE TABLE mtcars (car_model varchar(30), mpg float, cyl int,
                      disp float, hp int, drat float, wt float,
                      qsec float, vs float, am float, gear int,
@@ -29,6 +32,7 @@ CREATE TABLE mtcars_test AS (SELECT * FROM mtcars WHERE tf = 'test');
 DROP TABLE IF EXISTS iris;
 DROP TABLE IF EXISTS iris1;
 DROP TABLE IF EXISTS iris2;
+DROP MODEL IF EXISTS rf_iris;
 CREATE TABLE iris (id int, Sepal_Length float, Sepal_Width float,
                    Petal_Length float, Petal_Width float, Species varchar(10));
 CREATE TABLE iris1 (id int, Sepal_Length float, Sepal_Width float,
@@ -43,6 +47,8 @@ COPY iris2 FROM LOCAL 'iris2.csv' DELIMITER ',' ENCLOSED BY '"' SKIP 1;
 DROP TABLE IF EXISTS faithful;
 DROP TABLE IF EXISTS faithful_testing;
 DROP TABLE IF EXISTS faithful_training;
+DROP MODEL IF EXISTS linear_reg_faithful;
+DROP MODEL IF EXISTS svm_faithful;
 CREATE TABLE faithful (id int, eruptions float, waiting int);
 COPY faithful FROM LOCAL 'faithful.csv' DELIMITER ',' ENCLOSED BY '"' SKIP 1;
 CREATE TABLE faithful_testing (id int, eruptions float, waiting int);
@@ -72,6 +78,7 @@ COPY salary_data FROM LOCAL 'salary_data.csv' DELIMITER ',' ENCLOSED BY '"' SKIP
 DROP TABLE IF EXISTS agar_dish;
 DROP TABLE IF EXISTS agar_dish_1;
 DROP TABLE IF EXISTS agar_dish_2;
+DROP MODEL IF EXISTS agar_dish_1;
 CREATE TABLE agar_dish (id INT, x FLOAT, y FLOAT);
 CREATE TABLE agar_dish_1 (id INT, x FLOAT, y FLOAT);
 CREATE TABLE agar_dish_2 (id INT, x FLOAT, y FLOAT);
@@ -84,6 +91,7 @@ DROP TABLE IF EXISTS house84 CASCADE;
 DROP TABLE IF EXISTS dem_votes CASCADE;
 DROP TABLE IF EXISTS rep_votes CASCADE;
 DROP TABLE IF EXISTS house84_clean CASCADE;
+DROP MODEL IF EXISTS naive_house84_model;
 CREATE TABLE house84 (id IDENTITY, party varchar(10), vote1 varchar(1), vote2 varchar(1),
                       vote3 varchar(1), vote4 varchar(1), vote5 varchar(1), vote6 varchar(1),
                       vote7 varchar(1), vote8 varchar(1), vote9 varchar(1), vote10 varchar(10),
@@ -122,6 +130,7 @@ INSERT INTO small_input_impute VALUES( 20,1, 1,   NULL,      3.841606,  3.754375
 -- titanic data set
 DROP TABLE IF EXISTS titanic_training;
 DROP TABLE IF EXISTS titanic_testing;
+DROP MODEL IF EXISTS titanic_encoder;
 CREATE TABLE titanic_training(passenger_id int, survived int, pclass int, name varchar(50), 
                            sex varchar(10), age int, sibling_and_spouse_count int, parent_and_child_count int,
                            ticket varchar(15), fare float, cabin varchar(10), embarkation_point varchar(15));
@@ -130,3 +139,14 @@ CREATE TABLE titanic_testing(passenger_id int, pclass int, name varchar(50),
                            sex varchar(10), age int, sibling_and_spouse_count int, parent_and_child_count int,
                            ticket varchar(15), fare float, cabin varchar(10), embarkation_point varchar(15));
 COPY titanic_testing FROM LOCAL 'titanic_testing.csv' DELIMITER ',' ENCLOSED BY '"';
+
+--data set for SVD
+CREATE TABLE small_svd (id int, x1 int, x2 int, x3 int, x4 int);
+INSERT INTO small_svd VALUES (1,7,3,8,2);
+INSERT INTO small_svd VALUES (2,1,1,4,1);
+INSERT INTO small_svd VALUES (3,2,3,2,0);
+INSERT INTO small_svd VALUES (4,6,2,7,4);
+INSERT INTO small_svd VALUES (5,7,3,8,2);
+INSERT INTO small_svd VALUES (6,1,1,4,1);
+INSERT INTO small_svd VALUES (7,2,3,2,0);
+INSERT INTO small_svd VALUES (8,6,2,7,4);
