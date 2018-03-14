@@ -8,7 +8,7 @@ CREATE TABLE diamond(id int, carat float, cut varchar(10), color varchar(1), cla
 depthh float, tablee float, price float, x float, y float, z float);
 
 COPY diamond(id, carat, cut, color, clarity, depthh, tablee, price, x, y, z) 
-FROM '/home/release/vxu/diamonds.csv' DELIMITER ',' SKIP 1 ENCLOSED BY '"';
+FROM LOCAL './diamonds.csv.gz' GZIP DELIMITER ',' SKIP 1 ENCLOSED BY '"';
 
 Select count(*) from diamond;  --53940
 --id int, f1
