@@ -1,10 +1,5 @@
 --Evaluation Functions 
 
---APPLY_ONE_HOT_ENCODER: 
-
-SELECT APPLY_ONE_HOT_ENCODER(cyl USING PARAMETERS model_name='one_hot_encoder_model', 
-drop_first='true', ignore_null='false') FROM mtcars;
-
 --CONFUSION_MATRIX: 
 
 SELECT CONFUSION_MATRIX(obs::int, pred::int USING PARAMETERS num_classes=2) OVER()
@@ -17,7 +12,7 @@ SELECT CROSS_VALIDATE('svm_classifier', 'mtcars', 'am', 'mpg' USING PARAMETERS
 cv_fold_count= 6, cv_hyperparams='{"C":[1,5]}', cv_model_name='cv_svm', 
 cv_metrics='accuracy,error_rate');
 
-SELECT GET_MODEL_ATTRIBUTE(USING PARAMETERS attr_name='details', 
+SELECT GET_MODEL_ATTRIBUTE(USING PARAMETERS attr_name='run_details', 
 model_name='cv_svm');	     
 
 --GET_MODEL_ATTRIBUTE: 
@@ -35,7 +30,7 @@ SELECT ERROR_RATE(obs::int, pred::int USING PARAMETERS num_classes=2) OVER()
 	     
 --GET_MODEL_SUMMARY:
 
-SELECT GET_MODEL_SUMMARY(USING PARAMETERS model_name='linear_reg_faithful');
+SELECT GET_MODEL_SUMMARY(USING PARAMETERS model_name='myLinearRegModel');
 
 --LIFT_TABLE: 
 
@@ -52,11 +47,6 @@ SELECT MSE(obs, prediction) OVER()
                 PREDICT_LINEAR_REG (waiting USING PARAMETERS model_name='myLinearRegModel') AS prediction
          FROM faithful_testing) AS prediction_output;
 	 
---ONE_HOT_ENCODER_FIT:
-
-SELECT ONE_HOT_ENCODER_FIT ('one_hot_encoder_model','mtcars','*' 
-USING PARAMETERS exclude_columns='mpg,disp,drat,wt,qsec,vs,am');
-
 --ROC: 
 
 SELECT ROC(obs::int, prob::float USING PARAMETERS num_bins=2) OVER() 
