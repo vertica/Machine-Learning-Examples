@@ -58,7 +58,7 @@ COPY faithful_training FROM LOCAL 'faithful_training.csv' DELIMITER ',' ENCLOSED
 
 -- baseball data set
 DROP TABLE IF EXISTS baseball;
-CREATE TABLE baseball (id identity, first_name varchar(50), last_name varchar(50), dob DATE,
+CREATE TABLE baseball (id INT, first_name varchar(50), last_name varchar(50), dob DATE,
                            team varchar(20), hr int, hits int, avg float, salary float);
 COPY baseball FROM LOCAL 'baseball.csv' DELIMITER ',' SKIP 1;
 
@@ -92,7 +92,7 @@ DROP TABLE IF EXISTS dem_votes CASCADE;
 DROP TABLE IF EXISTS rep_votes CASCADE;
 DROP TABLE IF EXISTS house84_clean CASCADE;
 DROP MODEL IF EXISTS naive_house84_model;
-CREATE TABLE house84 (id IDENTITY, party varchar(10), vote1 varchar(1), vote2 varchar(1),
+CREATE TABLE house84 (id INT, party varchar(10), vote1 varchar(1), vote2 varchar(1),
                       vote3 varchar(1), vote4 varchar(1), vote5 varchar(1), vote6 varchar(1),
                       vote7 varchar(1), vote8 varchar(1), vote9 varchar(1), vote10 varchar(10),
                       vote11 varchar(1), vote12 varchar(1), vote13 varchar(1), vote14 varchar(1),
@@ -152,8 +152,7 @@ INSERT INTO small_svd VALUES (7,2,3,2,0);
 INSERT INTO small_svd VALUES (8,6,2,7,4);
 
 --data set for SUMMARIZE_NUMCOL
-CREATE TABLE employee (id INT PRIMARY KEY, name VARCHAR(64), age INT, gender CHAR(1), title
-VARCHAR(64), salary MONEY);
+CREATE TABLE employee (id INT, name VARCHAR(64), age INT, gender CHAR(1), title VARCHAR(64), salary MONEY);
 INSERT INTO employee VALUES(1, 'Leonardo da Vinci', 44, 'M', 'Artist', 1234.56);
 INSERT INTO employee VALUES(2, 'Albert Einstein', 45, 'M', 'Scientist', 2345.67);
 INSERT INTO employee VALUES(3, 'Myrddin Wyltt', 67, 'M', 'Wizard', 34567.78);

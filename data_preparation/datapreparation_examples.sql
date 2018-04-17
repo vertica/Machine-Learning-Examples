@@ -2,20 +2,20 @@
 
 --BALANCE: 
 
-CREATE TABLE backyard_bugs (id identity, bug_type int, finder varchar(20));
+CREATE TABLE backyard_bugs (id int, bug_type int, finder varchar(20));
 
 COPY backyard_bugs FROM STDIN;
-1|Ants
-1|Beetles
-3|Ladybugs
-3|Ants
-3|Beetles
-3|Caterpillars
-2|Ladybugs
-3|Ants
-3|Beetles
-1|Ladybugs
-3|Ladybugs
+1|1|Ants
+2|1|Beetles
+3|3|Ladybugs
+4|3|Ants
+5|3|Beetles
+6|3|Caterpillars
+7|2|Ladybugs
+8|3|Ants
+9|3|Beetles
+10|1|Ladybugs
+11|3|Ladybugs
 \.
 
 SELECT bug_type, COUNT(bug_type) FROM backyard_bugs GROUP BY bug_type;
@@ -26,19 +26,19 @@ SELECT bug_type, COUNT(bug_type) FROM backyard_bugs_balanced GROUP BY bug_type;
 
 --DETECT_OUTLIERS: 
 
-CREATE TABLE baseball_roster (id identity, last_name varchar(30), hr int, avg float);
+CREATE TABLE baseball_roster (id int, last_name varchar(30), hr int, avg float);
 
 COPY baseball_roster FROM STDIN;
-Polo|7|.233
-Gloss|45|.170
-Gus|12|.345
-Gee|1|.125
-Laus|3|.095
-Hilltop|16|.222
-Wicker|78|.333
-Scooter|0|.121
-Hank|999999|.8888
-Popup|35|.378
+1|Polo|7|.233
+2|Gloss|45|.170
+3|Gus|12|.345
+4|Gee|1|.125
+5|Laus|3|.095
+6|Hilltop|16|.222
+7|Wicker|78|.333
+8|Scooter|0|.121
+9|Hank|999999|.8888
+10|Popup|35|.378
 \.
 
 SELECT * FROM baseball_roster;
