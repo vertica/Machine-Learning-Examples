@@ -46,6 +46,15 @@ SELECT MSE(obs, prediction) OVER()
    FROM (SELECT eruptions AS obs,
                 PREDICT_LINEAR_REG (waiting USING PARAMETERS model_name='myLinearRegModel') AS prediction
          FROM faithful_testing) AS prediction_output;
+
+--PRC
+SELECT PRC(obs::int, prob::float USING PARAMETERS num_bins=2, f1_score=true) OVER() 
+	FROM (SELECT am AS obs,
+                    PREDICT_LOGISTIC_REG (mpg, cyl, disp, drat, wt,
+                                          qsec, vs, gear, carb
+                                          USING PARAMETERS model_name='myLogisticRegModel',
+                                                           type='probability') AS prob
+             FROM mtcars) AS prediction_output;
 	 
 --ROC: 
 
