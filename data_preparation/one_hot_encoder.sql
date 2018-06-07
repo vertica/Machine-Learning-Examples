@@ -11,7 +11,7 @@ CREATE VIEW titanic_training_encoded AS SELECT passenger_id, survived, pclass, s
 CREATE VIEW titanic_testing_encoded AS SELECT passenger_id, name, pclass, sex_1, age, sibling_and_spouse_count, parent_and_child_count, fare, embarkation_point_1, embarkation_point_2 FROM
     (SELECT APPLY_ONE_HOT_ENCODER(* USING PARAMETERS model_name='public.titanic_encoder') FROM titanic_testing) AS sq;
 
-SELECT LOGISTIC_REG('titanic_log_reg', 'titanic_training_encoded', 'survived', '*'
+SELECT LOGISTIC_REG('public.titanic_log_reg', 'titanic_training_encoded', 'survived', '*'
                     USING PARAMETERS exclude_columns='passenger_id, survived');
 SELECT passenger_id, name,
     PREDICT_LOGISTIC_REG(pclass, sex_1, age, sibling_and_spouse_count, parent_and_child_count, fare,
