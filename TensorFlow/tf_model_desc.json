@@ -1,0 +1,36 @@
+{
+    "frozen_graph": "mnist_keras.pb",
+    "input_desc": [
+        {
+            "op_name": "image_input",
+            "tensor_map": [
+                {
+                    "idx": 0,
+                    "dim": [
+                        1,
+                        28,
+                        28,
+                        1
+                    ],
+                    "col_start": 0
+                }
+            ]
+        }
+    ],
+    "output_desc": [
+        {
+            "op_name": "OUTPUT/Softmax",
+            "tensor_map": [
+                {
+                    "idx": 0,
+                    "dim": [
+                        1,
+                        10
+                    ],
+                    "col_start": 0
+                }
+            ]
+        }
+    ]
+}
+
