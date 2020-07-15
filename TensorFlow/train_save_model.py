@@ -1,5 +1,6 @@
 import numpy as np
 import os
+import sys
 
 import tensorflow.compat.v1 as tf
 from tensorflow import keras
@@ -89,22 +90,41 @@ predictions = tfmodel.predict (test_data)
 #-------------------------------------------------------------------------
 #   Save and export the model
 #-------------------------------------------------------------------------
-tensorflow_dir   = os.path.dirname (os.path.realpath (__file__))
-model_dir        = tensorflow_dir + '/model/'
-saved_model_dir  = tensorflow_dir + '/saved_model/'
-frozen_model_dir = tensorflow_dir + '/frozen_model/'
-output_dir = tensorflow_dir + '/tf_mnist_keras/'
+if 'linux' in sys.platform:
+    tensorflow_dir   = os.path.dirname (os.path.realpath (__file__))
+    model_dir        = tensorflow_dir + '/model/'
+    saved_model_dir  = tensorflow_dir + '/saved_model/'
+    frozen_model_dir = tensorflow_dir + '/frozen_model/'
+    output_dir = tensorflow_dir + '/tf_mnist_keras/'
 
-cmd = 'rm -Rf ' + model_dir + ' ' + saved_model_dir + ' ' + frozen_model_dir + ' ' + output_dir
-os.system (cmd)
-cmd = 'mkdir ' + frozen_model_dir + ' ' + output_dir
-os.system (cmd)
-cmd = 'cp ' + tensorflow_dir + '/tf_model_desc.json ' + output_dir
-os.system (cmd)
-cmd = 'cp ' + tensorflow_dir + '/data/20-* ' + output_dir
-os.system (cmd)
-cmd = 'cp ' + tensorflow_dir + '/load_tf_data.sql ' + output_dir
-os.system (cmd)
+    cmd = 'rm -Rf ' + model_dir + ' ' + saved_model_dir + ' ' + frozen_model_dir + ' ' + output_dir
+    os.system (cmd)
+    cmd = 'mkdir ' + frozen_model_dir + ' ' + output_dir
+    os.system (cmd)
+    cmd = 'cp ' + tensorflow_dir + '/tf_model_desc.json ' + output_dir
+    os.system (cmd)
+    cmd = 'cp ' + tensorflow_dir + '/data/20-* ' + output_dir
+    os.system (cmd)
+    cmd = 'cp ' + tensorflow_dir + '/load_tf_data.sql ' + output_dir
+    os.system (cmd)
+
+elif 'win' in sys.platform:
+    tensorflow_dir = os.path.dirname (os.path.realpath (__file__))
+    model_dir        = tensorflow_dir + '\\model\\'
+    saved_model_dir  = tensorflow_dir + '\\saved_model\\'
+    frozen_model_dir = tensorflow_dir + '\\frozen_model\\'
+    output_dir = tensorflow_dir + '\\tf_mnist_keras\\'
+
+    cmd = 'rmdir /s /Q ' + model_dir + ' ' + saved_model_dir + ' ' + frozen_model_dir + ' ' + output_dir
+    os.system (cmd)
+    cmd = 'mkdir ' + frozen_model_dir + ' ' + output_dir
+    os.system (cmd)
+    cmd = 'copy ' + tensorflow_dir + '\\tf_model_desc.json ' + output_dir
+    os.system (cmd)
+    cmd = 'copy ' + tensorflow_dir + '\\data\\20-* ' + output_dir
+    os.system (cmd)
+    cmd = 'copy ' + tensorflow_dir + '\\load_tf_data.sql ' + output_dir
+    os.system (cmd)
 
 saver = tf.train.Saver ()
 sess  = tf.keras.backend.get_session()
