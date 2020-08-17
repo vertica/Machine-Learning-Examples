@@ -109,6 +109,21 @@ os.system (cmd)
 saver = tf.train.Saver ()
 sess  = tf.keras.backend.get_session()
 
+# IMPORTANT
+# The strings in tfmodel.inputs and tfmode.outputs correspond almost exactly to the op_name parameters
+# required for each input/output in the tf_model_desc.json file. If you are building your own model,
+# run:
+#       print({t.name:t for t in tfmodel.inputs})
+#       print({t.name:t for t in tfmodel.outputs})
+# 
+# The outputs of the above command should be something like:
+# {'image_input:0': <tf.Tensor 'image_input:0' shape=(?, 28, 28, 1) dtype=float32>}
+# {'OUTPUT/Softmax:0': <tf.Tensor 'OUTPUT/Softmax:0' shape=(?, 10) dtype=float32>}
+#
+# from this we can infer that for the input the op_name should be 'image_input'
+# and for the output the op_name should be 'OUTPUT/Softmax'.
+#
+# This is also used below in the freeze_graph command.
 tf.saved_model.simple_save(
         sess,
         model_dir,
