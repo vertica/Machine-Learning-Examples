@@ -90,7 +90,7 @@ predictions = tfmodel.predict (test_data)
 #-------------------------------------------------------------------------
 #   Save and export the model
 #-------------------------------------------------------------------------
-if 'linux' in sys.platform:
+if 'linux' in sys.platform or 'darwin' in sys.platform:
     tensorflow_dir   = os.path.dirname (os.path.realpath (__file__))
     model_dir        = tensorflow_dir + '/model/'
     saved_model_dir  = tensorflow_dir + '/saved_model/'
