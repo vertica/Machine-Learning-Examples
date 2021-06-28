@@ -38,6 +38,8 @@ select import_models('path/to/frozen_tfmodel' using parameters category='TENSORF
 select PREDICT_TENSORFLOW (*
                    USING PARAMETERS model_name='frozen_tfmodel', num_passthru_cols=1)
                    OVER(PARTITION BEST) FROM tf_mnist_test_images order by id;
+-- to view the actual (observed) labels, do:
+select * from tf_mnist_test_labels order by id;
 ```
 
 ## Training a TF 1 model (deprecated)
