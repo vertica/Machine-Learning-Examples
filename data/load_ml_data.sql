@@ -158,3 +158,8 @@ INSERT INTO employee VALUES(2, 'Albert Einstein', 45, 'M', 'Scientist', 2345.67)
 INSERT INTO employee VALUES(3, 'Myrddin Wyltt', 67, 'M', 'Wizard', 34567.78);
 INSERT INTO employee VALUES(4, 'George Walker Bush', 71, 'M', 'President', 4567.89);
 INSERT INTO employee VALUES(6, 'Elizabeth Alexandra Mary', 90, 'F', 'Queen', 5678.90);
+
+-- for timeseries (autoregression, moving_average), daily min temperatures in Melbourne
+drop table if exists temp_data;
+CREATE TABLE temp_data(time timestamp, Temperature float);
+COPY temp_data FROM LOCAL 'daily-min-temperatures.csv' DELIMITER ',';
