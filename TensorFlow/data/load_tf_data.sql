@@ -788,5 +788,5 @@ create table tf_mnist_test_images (ID int,
     pixel_782 int,
     pixel_783 int);
 
-copy tf_mnist_test_images from local '20-t5k-images-idx3-ubyte.csv.gz' GZIP DELIMITER '|' DIRECT;
-copy tf_mnist_test_labels from local '20-t5k-labels-idx1-ubyte.csv.gz' GZIP DELIMITER '|' DIRECT;
+copy tf_mnist_test_images from local './data/20-t5k-images-idx3-ubyte.csv.gz' GZIP DELIMITER '|' DIRECT;
+copy tf_mnist_test_labels from local './data/20-t5k-labels-idx1-ubyte.csv.gz' GZIP DELIMITER '|' DIRECT;
