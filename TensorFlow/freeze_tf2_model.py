@@ -48,32 +48,41 @@ def main(argv):
     frozen_func = convert_variables_to_constants_v2(full_model)
     frozen_func.graph.as_graph_def()
 
-    print('Input name: ' + frozen_func.inputs[0].op.name)
-    print('Output name: ' + frozen_func.outputs[0].op.name)
-
     print('Saving frozen model to: ' + os.path.join(frozen_out_path, frozen_graph_filename + '.pb'))
     tf.io.write_graph(graph_or_graph_def=frozen_func.graph,
                       logdir=frozen_out_path,
                       name=f"{frozen_graph_filename}.pb",
                       as_text=False)
 
-    input_dims = [1 if e is None else e for e in list(model.inputs[0].get_shape())]
+	inputs = []
+	for inp in frozen_func.inputs:
+	    #print(inp.op.name)
+	    #print(inp.get_shape())
+	    input_dims = [1 if e is None else e for e in list(inp.get_shape())]
+	    dtype = 'TF_FLOAT' if inp.dtype is tf.float32 else 'TF_INT64'
+	    inputs.append(
+	    {
+	        'op_name' : inp.op.name,
+	        'tensor_map' : [{'idx': 0, 'dim' : input_dims, 'col_start' : 0, 'data_type' : dtype}]
+	    })
 
-    output_dims = [1 if e is None else e for e in list(model.outputs[0].get_shape())]
+	outputs = []
+	for output in frozen_func.outputs:
+	    #print(output.op.name)
+	    #print(output.get_shape())
+	    output_dims = [1 if e is None else e for e in list(output.get_shape())]
+	    dtype = 'TF_FLOAT' if output.dtype is tf.float32 else 'TF_INT64'
+	    outputs.append(
+	    {
+	        'op_name' : output.op.name,
+	        'tensor_map' : [{'idx': 0, 'dim' : output_dims, 'col_start' : 0, 'data_type' : dtype}]
+	    })
 
-    model_info = {
-        'frozen_graph' : frozen_graph_filename + '.pb',
-        'input_desc' :
-        [{
-            'op_name' : frozen_func.inputs[0].op.name,
-            'tensor_map' : [{'idx': 0, 'dim' : input_dims, 'col_start' : 0}]
-        }],
-        'output_desc' :
-        [{
-            'op_name' : frozen_func.outputs[0].op.name,
-            'tensor_map' : [{'idx': 0, 'dim' : output_dims, 'col_start' : 0}]
-        }]
-    }
+	model_info = {
+	    'frozen_graph' : frozen_graph_filename + '.pb',
+	    'input_desc' : inputs,
+	    'output_desc' : outputs
+	}
 
     #print(json.dumps(model_info, indent=4, sort_keys=False))
 
