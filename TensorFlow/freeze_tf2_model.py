@@ -6,6 +6,21 @@ from tensorflow.python.framework.convert_to_constants import convert_variables_t
 import numpy as np
 import json, os, sys
 
+def get_str_from_dtype(dtype, is_input):
+    if dtype in {tf.float16, tf.float32, tf.float64}:
+        dtype_str = 'TF_FLOAT'
+    elif dtype is tf.int64:
+        dtype_str = 'TF_INT64'
+    else:
+        print('Only float and int64 datatypes accepted for inputs and outputs of model.')
+        sys.exit()
+
+    if is_input and dtype_str is 'TF_INT64':
+        print('Integer dtype not accepted as model input.')
+        sys.exit()
+
+    return dtype_str
+
 def main(argv):
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1' # suppress some TF noise
 
@@ -59,7 +74,7 @@ def main(argv):
         #print(inp.op.name)
         #print(inp.get_shape())
         input_dims = [1 if e is None else e for e in list(inp.get_shape())]
-        dtype = 'TF_FLOAT' if inp.dtype is tf.float32 else 'TF_INT64'
+        dtype = get_str_from_dtype(inp.dtype, True)
         inputs.append(
         {
             'op_name' : inp.op.name,
@@ -71,7 +86,7 @@ def main(argv):
         #print(output.op.name)
         #print(output.get_shape())
         output_dims = [1 if e is None else e for e in list(output.get_shape())]
-        dtype = 'TF_FLOAT' if output.dtype is tf.float32 else 'TF_INT64'
+        dtype = get_str_from_dtype(output.dtype, False)
         outputs.append(
         {
             'op_name' : output.op.name,
