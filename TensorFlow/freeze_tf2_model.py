@@ -6,17 +6,23 @@ from tensorflow.python.framework.convert_to_constants import convert_variables_t
 import numpy as np
 import json, os, sys
 
+# https://www.tensorflow.org/api_docs/python/tf/dtypes
 def get_str_from_dtype(dtype, is_input):
-    if dtype in {tf.float16, tf.float32, tf.float64}:
+    if dtype in {tf.float16, tf.float32, tf.half}:
         dtype_str = 'TF_FLOAT'
     elif dtype is tf.int64:
         dtype_str = 'TF_INT64'
+    elif dtype in {tf.float64, tf.double}:
+        dtype_str = 'TF_DOUBLE'
     else:
-        print('Only float and int64 datatypes accepted for inputs and outputs of model.')
+        print('Only float, double, and int64 datatypes accepted for inputs and outputs of model.')
         sys.exit()
 
     if is_input and dtype_str is 'TF_INT64':
         print('Integer dtype not accepted as model input.')
+        sys.exit()
+    elif not is_input and dtype_str is 'TF_DOUBLE':
+        print('Floats and doubles larger than 32-bit not currently supported for model output.')
         sys.exit()
 
     return dtype_str
