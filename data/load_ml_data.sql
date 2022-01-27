@@ -252,4 +252,4 @@ gdp2008 NUMERIC(15,9),
 gdp2009 NUMERIC(15,9),
 gdp2010 NUMERIC(15,9)); 
 
-COPY world FROM '../../Machine-Learning-Examples/data/world.csv' DELIMITER ',' SKIP 1; 
+COPY world FROM LOCAL 'world.csv' DELIMITER ',' SKIP 1; 
