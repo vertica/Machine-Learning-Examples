@@ -43,10 +43,9 @@ select * from tf_mnist_test_labels order by id;
 ```
 
 ### Training a multi-input TF 2 model
-Some tasks require a model which can accept multiple inputs which cannot be grouped into a single Tensor. While this is a toy example, it illustrates how to train and freeze a multi-input model.
-Follow the instructions in the section above, with the following exceptions:
+Some tasks require a model which can accept multiple inputs which cannot be grouped into a single Tensor. While this is a toy example, it illustrates how to train and freeze a multi-input model. Follow the instructions in the section above, with the following exceptions:
 
-- In step 2, substitute `train_multi_input_model` instead of `train_simple_model.py`.
+- In step 2, substitute `train_multi_input_model.py` instead of `train_simple_model.py`.
 - In step 3, substitute the `multi_input_model` directory instead of `simple_model`.
 - Steps 4 - 7 remain unchanged.
 - In step 8, run this SQL statement instead:
@@ -60,7 +59,7 @@ select PREDICT_TENSORFLOW (id, label, x, y
 ## Training a TF 1 model (deprecated)
 1. [Install TensorFlow](https://www.tensorflow.org/install/pip#virtualenv-install) 1.15 on your system. Note: To install a specific version do `pip install tensorflow==1.15` in the last step. If this version of TensorFlow is not found, you may need to downgrade your python version (TF 1 is not supported on Python 3.8 and newer)
 2. Change to the `tf1` directory.
-3. Run `python3 train_save_model.py` from the base directory of this repo.
+3. Run `python3 train_save_model.py`.
 4. Move/copy the entire tf_mnist_keras directory to your Vertica cluster, then run the import TF model command:
 ```sql
 select import_models('path/to/tf_mnist_keras' using parameters category='TENSORFLOW');

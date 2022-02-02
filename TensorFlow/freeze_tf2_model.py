@@ -8,17 +8,18 @@ import json, os, sys
 
 # https://www.tensorflow.org/api_docs/python/tf/dtypes
 def get_str_from_dtype(dtype, is_input, idx):
-    dtype_to_string = {
-            tf.float16 : 'TF_HALF',
-            tf.float32 : 'TF_FLOAT',
-            tf.half : 'TF_HALF',
-            tf.float64 : 'TF_DOUBLE',
-            tf.double : 'TF_DOUBLE',
-            tf.int8 : 'TF_INT8',
-            tf.int16 : 'TF_INT16',
-            tf.int32 : 'TF_INT32',
-            tf.int64 : 'TF_INT64'
-            }
+    dtype_to_string =
+    {
+        tf.float16  : 'TF_HALF',
+        tf.float32  : 'TF_FLOAT',
+        tf.half     : 'TF_HALF',
+        tf.float64  : 'TF_DOUBLE',
+        tf.double   : 'TF_DOUBLE',
+        tf.int8     : 'TF_INT8',
+        tf.int16    : 'TF_INT16',
+        tf.int32    : 'TF_INT32',
+        tf.int64    : 'TF_INT64'
+    }
 
     if dtype in dtype_to_string:
         dtype_str = dtype_to_string[dtype]
@@ -57,11 +58,12 @@ def main(argv):
 
     print('Model Input:', model.input)
 
-    tensor_input = []
     if isinstance(model.input, list):
         no_of_inputs = len(model.input)
     else:
         no_of_inputs = 1
+
+    tensor_input = []
     for i in range(no_of_inputs):
         tensor_input.append(tf.TensorSpec(shape=None, dtype=model.input[i].dtype))
 
