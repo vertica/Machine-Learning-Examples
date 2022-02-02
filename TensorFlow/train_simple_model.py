@@ -5,6 +5,7 @@ import os
 
 import tensorflow as tf
 from tensorflow import keras
+from tensorflow.keras import layers
 from tensorflow.keras.utils import to_categorical
 
 from load_mnist import load_mnist
@@ -16,18 +17,17 @@ print ("TensorFlow version:", tf.__version__)
 print ('Keras version: ', keras.__version__)
 
 batch_size      = 100
-epochs          = 5
+epochs          = 1
 num_test_images = 10
+tftype = tf.float32
+nptype = np.float32
 
-(train_eval_data, train_eval_labels), (test_data, test_labels) = load_mnist (normalize=True)
+(train_eval_data, train_eval_labels), (test_data, test_labels) = load_mnist(datatype=nptype)
 
-train_eval_data = train_eval_data.astype ('float64')
-test_data       = test_data.astype ('float64')
-
-train_eval_labels = np.asarray (train_eval_labels, dtype=np.int64)
+train_eval_labels = np.asarray (train_eval_labels, dtype=nptype)
 train_eval_labels = to_categorical (train_eval_labels)
 
-test_labels = np.asarray (test_labels,  dtype=np.int64)
+test_labels = np.asarray (test_labels,  dtype=nptype)
 test_labels = to_categorical (test_labels)
 
 #  Split the training data into two parts, training and evaluation
@@ -51,14 +51,14 @@ test_data  = test_data.reshape  ((10000, 28,28,1))
 test_data   = test_data [:num_test_images]
 test_labels = test_labels [:num_test_images]
 
-tfmodel = keras.Sequential ([
-    keras.layers.Conv2D       (32, (5,5), activation = tf.nn.relu, input_shape=(28, 28,1), name='image'),
-    keras.layers.MaxPooling2D (2,2),
-    keras.layers.Conv2D       (64, (5, 5), activation=tf.nn.relu),
-    keras.layers.MaxPooling2D (2, 2),
-    keras.layers.Flatten      (),
-    keras.layers.Dense        (10, activation=tf.nn.softmax, name='OUTPUT')
-])
+inputs = keras.Input(shape=(28, 28, 1), name="image")
+x = layers.Conv2D(32, 5, activation="relu")(inputs)
+x = layers.MaxPooling2D(2)(x)
+x = layers.Conv2D(64, 5, activation="relu")(x)
+x = layers.MaxPooling2D(2)(x)
+x = layers.Flatten()(x)
+x = layers.Dense(10, activation='softmax', name='OUTPUT')(x)
+tfmodel = keras.Model(inputs, x)
 
 tfmodel.compile (loss='categorical_crossentropy',
                  optimizer='sgd',
@@ -87,7 +87,7 @@ predictions = tfmodel.predict (test_data)
 #-------------------------------------------------------------------------
 #   Save and export the model
 #-------------------------------------------------------------------------
-tensorflow_dir   = './tf2_model'
+tensorflow_dir   = './simple_model'
 
 tfmodel.save(tensorflow_dir)
 print('model saved to: ' + tensorflow_dir)
