@@ -15,7 +15,7 @@ python3 train_simple_model.py
 ```
 3. In order for Vertica to successfully import your model, it must be transformed into a frozen graph file, we provide a script to do this for TF2 models. Run the freeze_tf2_model.py script, passing in the path to your saved model directory and optionally the directory name to save the frozen graph to (default is saved_model_dir/frozen_tfmodel):
 ```bash
-python3 freeze_tf_model.py simple_model
+python3 freeze_tf2_model.py simple_model
 ```
 This script also auto-generates the required tf_model_desc.json file, which allows Vertica to translate from SQL tables to Tensorflow Tensors. This generated file should work for most cases, but if your model requires a complex mapping from/to Vertica tables you may need to modify it (see the Vertica documentation).
 
