@@ -10,7 +10,7 @@ key_file = {
     'test_label':  't10k-labels-idx1-ubyte.gz'
 }
 
-cur_dir = os.path.dirname(os.path.abspath(__file__)) 
+cur_dir = os.path.dirname(os.path.abspath(__file__))
 dataset_dir = cur_dir + '/data'
 
 img_size  = 784
@@ -65,13 +65,13 @@ def change_one_hot_labels(X):
 #    -------
 #    (Trainig Image, Training Label), (Test Image, Test Label)
 #----------------------------------------------------------------------------
-def load_mnist (normalize=True, flatten=True, one_hot_label=False):
+def load_mnist (normalize=True, flatten=True, one_hot_label=False, datatype=np.float32):
 
     dataset = convert_to_numpy ()
 
     if normalize:
         for key in ('train_img', 'test_img'):
-            dataset[key] = dataset[key].astype(np.float32)
+            dataset[key] = dataset[key].astype(datatype)
             dataset[key] /= 255.0
 
     if not flatten:
