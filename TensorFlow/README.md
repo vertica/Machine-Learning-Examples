@@ -7,21 +7,21 @@ TensorFlow support was introduced in Vertica 10.x.x, which only supports TF 1. T
 
 #### Supported Input Types:
 
-| Vertica Version | Float | Double | Int\* |
-| --------------- | ----- | ------ | ----- |
-| 10.x.x          | :white_check_mark:   | Yes    | :x:    |
-| 11.x.x          | Yes   | Yes    | No    |
-| 11.1.x          | Yes   | Yes    | Yes   |
+| Vertica Version | Float              | Double             | Int\*              |
+| --------------- | ------------------ | ------------------ | ------------------ |
+| 10.x.x          | :white_check_mark: | :white_check_mark: | :x:                |
+| 11.x.x          | :white_check_mark: | :white_check_mark: | :x:                |
+| 11.1.x          | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 \*Includes Int8, Int16, Int32, and Int64.
 
 #### Supported Output Types:
 
-| Vertica Version | Float | Double | Int\* |
-| --------------- | ----- | ------ | ----- |
-| 10.x.x          | Yes   | No     | N/A   |
-| 11.x.x          | Yes   | No     | N/A   |
-| 11.1.x          | Yes   | Yes    | N/A   |
+| Vertica Version | Float              | Double             | Int\* |
+| --------------- | ------------------ | ------------------ | ----- |
+| 10.x.x          | :white_check_mark: | :x:                | N/A   |
+| 11.x.x          | :white_check_mark: | :x:                | N/A   |
+| 11.1.x          | :white_check_mark: | :white_check_mark: | N/A   |
 
 \*There is no way to output an integer from a TF model.
 
