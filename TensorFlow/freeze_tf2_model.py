@@ -8,8 +8,7 @@ import json, os, sys
 
 # https://www.tensorflow.org/api_docs/python/tf/dtypes
 def get_str_from_dtype(dtype, is_input, idx):
-    dtype_to_string =
-    {
+    dtype_to_string = {
         tf.float16  : 'TF_HALF',
         tf.float32  : 'TF_FLOAT',
         tf.half     : 'TF_HALF',
