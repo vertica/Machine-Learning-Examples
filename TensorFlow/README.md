@@ -9,7 +9,7 @@ TensorFlow support was introduced in Vertica 10.x.x, which only supports TF 1. T
 
 | Vertica Version | Float | Double | Int\* |
 | --------------- | ----- | ------ | ----- |
-| 10.x.x          | Yes   | Yes    | No    |
+| 10.x.x          | Yes   | Yes    | :x:    |
 | 11.x.x          | Yes   | Yes    | No    |
 | 11.1.x          | Yes   | Yes    | Yes   |
 
