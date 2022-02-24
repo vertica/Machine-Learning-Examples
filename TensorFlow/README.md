@@ -8,7 +8,7 @@ TensorFlow support was introduced in Vertica 10.x.x, which only supports TF 1. T
 #### Supported Input Types:
 
 | Vertica Version | Float              | Double             | Int\*              |
-| --------------- | ------------------ | ------------------ | ------------------ |
+| --------------- | :----------------: | :----------------: | :----------------: |
 | 10.x.x          | :white_check_mark: | :white_check_mark: | :x:                |
 | 11.x.x          | :white_check_mark: | :white_check_mark: | :x:                |
 | 11.1.x          | :white_check_mark: | :white_check_mark: | :white_check_mark: |
@@ -18,7 +18,7 @@ TensorFlow support was introduced in Vertica 10.x.x, which only supports TF 1. T
 #### Supported Output Types:
 
 | Vertica Version | Float              | Double             | Int\* |
-| --------------- | ------------------ | ------------------ | ----- |
+| --------------- | :----------------: | :----------------: | :---: |
 | 10.x.x          | :white_check_mark: | :x:                | N/A   |
 | 11.x.x          | :white_check_mark: | :x:                | N/A   |
 | 11.1.x          | :white_check_mark: | :white_check_mark: | N/A   |
