@@ -36,15 +36,15 @@ TensorFlow 2 brings many updates and improvements to TensorFlow, and is now the 
 1. [Install TensorFlow](https://www.tensorflow.org/install).
 2. Train and save the example model:
 ```bash
-$ python3 train_simple_model.py
+python3 train_simple_model.py
 ```
 3. Convert your TF 2 model to the Vertica-compatible frozen graph format by running `freeze_tf2_model.py`, passing in the path to your saved model directory and (optionally) the directory name to save the frozen graph to (default: `saved_model_dir/frozen_tfmodel`).:
 ```bash
-$ python3 freeze_tf2_model.py simple_model
+python3 freeze_tf2_model.py simple_model
 ```
 This script also generates the required `tf_model_desc.json` file, which allows Vertica to translate between SQL tables Tensorflow Tensors.
 
-While the automatically-generated file should work for most use cases, you may need to modify it if your model requires a complex mapping from/to Vertica tables. For details, see [`tf_model_desc.json` Overview](https://www.vertica.com/docs/latest/HTML/Content/Authoring/AnalyzingData/MachineLearning/UsingExternalModels/UsingTensorFlow/ModelDescJsonOverview.htm).
+While the automatically-generated file should work for most use cases, you may need to modify it if your model requires a complex mapping from/to Vertica tables. For details, see [tf_model_desc.json Overview](https://www.vertica.com/docs/latest/HTML/Content/Authoring/AnalyzingData/MachineLearning/UsingExternalModels/UsingTensorFlow/ModelDescJsonOverview.htm).
 
 4. Copy the resulting frozen model folder (containing the .pb and .json files) to any node in your Vertica cluster.
 
@@ -52,22 +52,22 @@ While the automatically-generated file should work for most use cases, you may n
 
 6. Load the data into Vertica (your vsql alias may differ: e.q. $VSQL). The data folder must be in the same directory as the load_tf_data.sql file:
 ```bash
-$ vsql -f load_tf_data.sql
+vsql -f load_tf_data.sql
 ```
 
 7. Import your trained model:
 > **_NOTE:_**  The imported model takes on the name of the folder containing the .pb file, so rename this folder prior to import if you want a different name.
 ```sql
-=> SELECT import_models('path/to/frozen_tfmodel' USING PARAMETERS category='TENSORFLOW');
+SELECT import_models('path/to/frozen_tfmodel' USING PARAMETERS category='TENSORFLOW');
 ```
 
 8. Predict with your model in Vertica:
 ```sql
-=> SELECT PREDICT_TENSORFLOW (*
+SELECT PREDICT_TENSORFLOW (*
                    USING PARAMETERS model_name='frozen_tfmodel', num_passthru_cols=1)
                    OVER(PARTITION BEST) FROM tf_mnist_test_images ORDER BY id;
 -- to view the actual (observed) labels:
-=> SELECT * FROM tf_mnist_test_labels ORDER BY id;
+SELECT * FROM tf_mnist_test_labels ORDER BY id;
 ```
 
 ### Training a multi-input TensorFlow 2 model
@@ -77,12 +77,12 @@ Some tasks require a model that can accept multiple inputs which cannot be group
 - In step 3, use the `multi_input_model` directory (rather than `simple_model`).
 - In step 8, run the following query to start the prediction:
 ```sql
-=> SELECT PREDICT_TENSORFLOW (id, label, x, y 
+SELECT PREDICT_TENSORFLOW (id, label, x, y 
                    USING PARAMETERS model_name='frozen_multi_model', num_passthru_cols=2)
                    OVER(PARTITION BEST) AS (id, true_label, pred_label)
                    FROM tf_cluster_data ORDER BY id;
 -- to view the actual (observed) labels:
-=> SELECT * FROM tf_mnist_test_labels ORDER BY id;
+SELECT * FROM tf_mnist_test_labels ORDER BY id;
 ```
 
 ## Training a TensorFlow 1 model (deprecated)
@@ -93,7 +93,7 @@ Some tasks require a model that can accept multiple inputs which cannot be group
 4. Move/copy the entire `tf_mnist_keras` directory to your Vertica cluster.
 5. Run `import_models`:
 ```sql
-=> SELECT import_models('path/to/tf_mnist_keras' USING parameters category='TENSORFLOW');
+SELECT import_models('path/to/tf_mnist_keras' USING parameters category='TENSORFLOW');
 ```
 6. See the [Vertica documentation](https://www.vertica.com/docs/latest/HTML/Content/Authoring/AnalyzingData/MachineLearning/UsingExternalModels/UsingTensorFlow/TensorFlowExample.htm) for further instructions.
 
