@@ -212,8 +212,8 @@ if __name__ == "__main__":
         print('1. Path to your saved model directory')
         print('2. (Optional) name of the folder to save the frozen model (default: frozen_tfmodel)')
         print('3. (Optional) Input/output Vertica column type in prediction (0 (default): primitive; 1: complex)')
-		print('   Use primitive if you want one value stored in each row/column cell.')
-		print('   Use complex if you want to store the data in Vertica arrays.')
+        print('   Use primitive if you want one value stored in each row/column cell.')
+        print('   Use complex if you want to store the data in Vertica arrays.')
         print('Example call: ./freeze_tf_model.py path/to/saved/model my_frozen_model 0')
         sys.exit()
 
