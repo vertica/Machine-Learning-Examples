@@ -14,7 +14,6 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 print ("Numpy version:     ", np.__version__)
 print ("TensorFlow version:", tf.__version__)
-print ('Keras version: ', keras.__version__)
 
 batch_size      = 100
 epochs          = 5

@@ -5,7 +5,7 @@
 #
 # This script ingests a saved TensorFlow 2 model and outputs a folder with a frozen model
 # and a model description json file. The format of the model description file is based on
-# the input/output Vertica column type in prediction. Copy this folder to your Vertica 
+# the input/output Vertica column type in prediction. Copy this folder to your Vertica
 # cluster and use the IMPORT_MODELS function to import it. Use PREDICT_TENSORFLOW for
 # primitive input/output columns and PREDICT_TENSORFLOW_SCALAR for complex input/output
 # columns. See documentation for more details.
@@ -19,6 +19,7 @@ from tensorflow.python.framework.convert_to_constants import convert_variables_t
 import numpy as np
 import json, os, sys
 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'  # suppress some TF noise
 
 # https://www.tensorflow.org/api_docs/python/tf/dtypes
 def get_str_from_dtype(dtype, is_input, idx):
@@ -47,32 +48,7 @@ def get_str_from_dtype(dtype, is_input, idx):
     return dtype_str
 
 
-def main(argv):
-    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'  # suppress some TF noise
-
-    if len(sys.argv) != 2 and len(sys.argv) != 3 and len(sys.argv) != 4:
-        print('There are three arguments to the script:')
-        print('1. Path to your saved model directory')
-        print('2. (Optional) name of the folder to save the frozen model (default: frozen_tfmodel)')
-        print('3. (Optional) Input/output Vertica column type in prediction (0 (default): primitive; 1: complex)')
-        print('Example call: ./freeze_tf_model.py path/to/saved/model my_frozen_model 0')
-        sys.exit()
-
-    saved_model_path = sys.argv[1]
-
-    default_save_dir = 'frozen_tfmodel'
-    default_column_type = '0'
-
-    if len(sys.argv) == 4:
-        save_dir = sys.argv[2]
-        column_type = sys.argv[3]
-    elif len(sys.argv) == 3:
-        save_dir = sys.argv[2]
-        column_type = default_column_type
-    else:
-        save_dir = default_save_dir
-        column_type = default_column_type
-
+def main(saved_model_path, save_dir = 'frozen_tfmodel', column_type = '0'):
     # shared parameters
     frozen_out_path = os.path.join(saved_model_path, save_dir)
     frozen_graph_file = "frozen_graph" + ".pb"  # name of the .pb file
@@ -231,4 +207,21 @@ def gen_tensor_list(tensors):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    if len(sys.argv) < 2 or len(sys.argv) > 4 or sys.argv[1] in ['-h', '--help']:
+        print('There are three arguments to the script:')
+        print('1. Path to your saved model directory')
+        print('2. (Optional) name of the folder to save the frozen model (default: frozen_tfmodel)')
+        print('3. (Optional) Input/output Vertica column type in prediction (0 (default): primitive; 1: complex)')
+        print('Example call: ./freeze_tf_model.py path/to/saved/model my_frozen_model 0')
+        sys.exit()
+
+    saved_model_path = sys.argv[1]
+
+    if len(sys.argv) == 2:
+        main(sys.argv[1])
+    elif len(sys.argv) == 3:
+        main(sys.argv[1], sys.argv[2])
+    elif len(sys.argv) == 4:
+        main(sys.argv[1], sys.argv[2], sys.argv[3])
+    else:
+        print('Invalid number of arguments.') # unreachable, just here for completeness
