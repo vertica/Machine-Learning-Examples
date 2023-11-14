@@ -48,16 +48,13 @@ def get_str_from_dtype(dtype, is_input, idx):
     return dtype_str
 
 
-def main(saved_model_path, save_dir = 'frozen_tfmodel', column_type = '0'):
+def freeze_model(model, save_dir, column_type):
     # shared parameters
-    frozen_out_path = os.path.join(saved_model_path, save_dir)
+    frozen_out_path = save_dir
     frozen_graph_file = "frozen_graph" + ".pb"  # name of the .pb file
     tf_model_desc_file = "tf_model_desc.json"
 
-    if column_type == "0":
-
-        model = tf.keras.models.load_model(saved_model_path)
-
+    if column_type == "0": # standard (primitive) column types
         # Convert Keras model to ConcreteFunction
         full_model = tf.function(lambda x: model(x))
 
@@ -135,13 +132,8 @@ def main(saved_model_path, save_dir = 'frozen_tfmodel', column_type = '0'):
 
         save_desc_file(model_info, frozen_out_path, tf_model_desc_file)
 
-    elif column_type == "1":
-
-        tag_set = 'serve'
+    elif column_type == "1": # new row-type column type, aka array complex data type
         signature_def_key = 'serving_default'
-
-        # model = tf.saved_model.load(saved_model_path, tags=tag_set)
-        model = tf.keras.models.load_model(saved_model_path)
 
         input_tensors = model.signatures[signature_def_key].inputs
         input_tensors = list(filter(lambda t: t.shape.rank > 0, input_tensors))  # remove resource-type tensors
@@ -167,13 +159,15 @@ def main(saved_model_path, save_dir = 'frozen_tfmodel', column_type = '0'):
         save_desc_file(model_info, frozen_out_path, tf_model_desc_file)
 
     else:
-
         print('Unrecognized column type flag')
         sys.exit()
 
+def freeze_model_from_file(saved_model_path, save_dir = 'frozen_tfmodel', column_type = '0'):
+    frozen_out_path = os.path.join(saved_model_path, save_dir)
+    model = tf.keras.models.load_model(saved_model_path)
+    freeze_model(model, frozen_out_path, column_type)
 
 def save_graph(frozen_func, frozen_out_path, frozen_graph_file):
-
     print('Saving frozen model to: ' + os.path.join(frozen_out_path, frozen_graph_file))
     tf.io.write_graph(graph_or_graph_def=frozen_func.graph,
                         logdir=frozen_out_path,
@@ -182,7 +176,6 @@ def save_graph(frozen_func, frozen_out_path, frozen_graph_file):
 
 
 def save_desc_file(model_info, frozen_out_path, tf_model_desc_file):
-
     print('Saving model description file to: ' + os.path.join(frozen_out_path, tf_model_desc_file))
     with open(os.path.join(frozen_out_path, tf_model_desc_file), 'w') as json_file:
         json.dump(model_info, json_file, indent=4, sort_keys=False)
@@ -220,10 +213,10 @@ if __name__ == "__main__":
     saved_model_path = sys.argv[1]
 
     if len(sys.argv) == 2:
-        main(sys.argv[1])
+        freeze_model_from_file(sys.argv[1])
     elif len(sys.argv) == 3:
-        main(sys.argv[1], sys.argv[2])
+        freeze_model_from_file(sys.argv[1], sys.argv[2])
     elif len(sys.argv) == 4:
-        main(sys.argv[1], sys.argv[2], sys.argv[3])
+        freeze_model_from_file(sys.argv[1], sys.argv[2], sys.argv[3])
     else:
         print('Invalid number of arguments.') # unreachable, just here for completeness
