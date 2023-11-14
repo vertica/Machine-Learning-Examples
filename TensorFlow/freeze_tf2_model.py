@@ -133,9 +133,11 @@ def freeze_model(model, save_dir, column_type):
         save_desc_file(model_info, frozen_out_path, tf_model_desc_file)
 
     elif column_type == "1": # new row-type column type, aka array complex data type
-        signature_def_key = 'serving_default'
-
-        input_tensors = model.signatures[signature_def_key].inputs
+        input_tensors = []
+        if hasattr(model, 'signatures'):
+            input_tensors = model.signatures['serving_default'].inputs
+        else:
+            input_tensors = model.inputs # if a model hasn't been saved it may not have any signatures
         input_tensors = list(filter(lambda t: t.shape.rank > 0, input_tensors))  # remove resource-type tensors
 
         # Convert the TF model to a concrete function
@@ -213,10 +215,10 @@ if __name__ == "__main__":
     saved_model_path = sys.argv[1]
 
     if len(sys.argv) == 2:
-        freeze_model_from_file(sys.argv[1])
+        freeze_model_from_file(str(sys.argv[1]))
     elif len(sys.argv) == 3:
-        freeze_model_from_file(sys.argv[1], sys.argv[2])
+        freeze_model_from_file(str(sys.argv[1]), str(sys.argv[2]))
     elif len(sys.argv) == 4:
-        freeze_model_from_file(sys.argv[1], sys.argv[2], sys.argv[3])
+        freeze_model_from_file(str(sys.argv[1]), str(sys.argv[2]), str(sys.argv[3]))
     else:
         print('Invalid number of arguments.') # unreachable, just here for completeness
